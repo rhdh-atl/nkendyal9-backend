@@ -1,0 +1,66 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: nkendyal9-poi-backend-app-dev
+  annotations:
+    argocd/app-name: nkendyal9-poi-backend-app-dev
+    backstage.io/kubernetes-id: nkendyal9-poi-backend-app
+    backstage.io/kubernetes-namespace: nkendyal9
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: rhdh-atl/nkendyal9-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.j0i9yf30.eastus2.aroapp.io/dev-pipelines/ns/nkendyal9/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.j0i9yf30.eastus2.aroapp.io/k8s/ns/nkendyal9/deployments/nkendyal9-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.j0i9yf30.eastus2.aroapp.io/#https://github.com/rhdh-atl/nkendyal9-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/nkendyal8"
+  system: workshop-system-nkendyal9
+  providesApis:
+    - backend-api-nkendyal9
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-nkendyal9
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/nkendyal8"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-nkendyal9
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://nkendyal9-poi-backend-app-nkendyal9.apps.j0i9yf30.eastus2.aroapp.io/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/rhdh-atl/nkendyal9-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/nkendyal8"
+  system: workshop-system-nkendyal9
+  definition:
+    $text: https://github.com/rhdh-atl/nkendyal9-backend/tree/main/src/main/resources/META-INF/openapi.yaml
